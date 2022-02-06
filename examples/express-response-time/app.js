@@ -6,11 +6,11 @@ let app = express();
 
 let honey = new libhoney({
   writeKey: process.env["HONEY_WRITE_KEY"],
-  dataset: "express-example-response-time"
+  dataset: "express-example-response-time",
 });
 
 app.use(
-  responseTime(function(req, res, time) {
+  responseTime((req, res, time) => {
     honey.sendNow({
       app: req.app,
       baseUrl: req.baseUrl,
@@ -26,15 +26,15 @@ app.use(
       route: req.route,
       secure: req.secure,
       xhr: req.xhr,
-      responseTime_ms: time
+      responseTimeMs: time,
     });
   })
 );
 
-app.get("/", function(req, res) {
+app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.listen(3000, function() {
+app.listen(3000, () => {
   console.log("Example app listening on port 3000!");
 });
